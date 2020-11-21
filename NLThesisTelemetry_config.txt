@@ -1,0 +1,85 @@
+Read CC3200 programmer's guide
+
+Release configuration
+
+extra files:
+driver.c
+gpio.c
+gpio_if.c
+interrupt.c
+pinmux.h
+socket.c
+timer_if.c
+timer.c
+uart_if.c
+uart.c
+udma_if.c
+
+
+Include Options
+"${CC3200_SDK_ROOT}/inc"
+"${CC3200_SDK_ROOT}/driverlib"
+"${CC3200_SDK_ROOT}/oslib"
+"${CC3200_SDK_ROOT}/simplelink/source"
+"${CC3200_SDK_ROOT}/simplelink/include"
+"${CC3200_SDK_ROOT}/simplelink/"
+"${CC3200_SDK_ROOT}/example/common"
+"${CC3200_SDK_ROOT}/"
+"${CC3200_SDK_ROOT}/middleware/framework/pm"
+"${CC3200_SDK_ROOT}/middleware/framework/timer"
+"${CC3200_SDK_ROOT}/middleware/driver"
+"${CC3200_SDK_ROOT}/middleware/driver/hal"
+"${CC3200_SDK_ROOT}/middleware/soc"
+
+
+
+Post build steps
+"${CCE_INSTALL_ROOT}/utils/tiobj2bin/tiobj2bin" "${BuildArtifactFileName}" "${BuildArtifactFileBaseName}.bin" "${CG_TOOL_ROOT}/bin/armofd" "${CG_TOOL_ROOT}/bin/armhex" "${CCE_INSTALL_ROOT}/utils/tiobj2bin/mkhex4bin"
+
+
+File Search Path
+1
+middleware.a
+"${CC3200_SDK_ROOT}/simplelink/ccs/OS/simplelink.a"
+"${CC3200_SDK_ROOT}/driverlib/ccs/Release/driverlib.a"
+"${CC3200_SDK_ROOT}/oslib/ccs/ti_rtos/ti_rtos.a"
+
+2
+"${CC3200_SDK_ROOT}/driverlib/ccs/Release/"
+"${CC3200_SDK_ROOT}/simplelink/ccs/PM_Framework/"
+"${CC3200_SDK_ROOT}/middleware/ccs/Release/"
+"C:\TI\CC3200SDK_1.1.0\cc3200-sdk\oslib\ccs\ti_rtos"
+
+predefined symbols:
+ccs
+NON_BLOCKING_SOCKET
+SL_PLATFORM_MULTI_THREADED
+USE_TIRTOS
+DEBUG
+cc3200
+
+define TCP_CLIENT if you want to enable tcp mode
+(otherwise it is UDP mode)
+
+To port the project to SDK1.2.0 + :
+1. Add  simplelink_extlib/provisioninling to include path like so: 
+"${CC3200_SDK_ROOT}/simplelink_extlib/provisioninglib")
+2. Add network_common.c to your project (CC3200_ROOT_PATH as the reference point)
+3. Make sure you have a void SimpleLinkGeneralEventHandler(SlDeviceEvent_t *pDevEvent) to your main.c like so:
+SimpleLinkGeneralEventHandler(SlDeviceEvent_t *pDevEvent) 
+{
+	// do nothing or w/e
+}
+
+
+Installing program to CC3200:
+For flashing the SOP2 jumper must be installed on the board. If the MCU is reset whith this jumper present, it will go into bootloader/programming mode.
+Note that while debugging on the CC3200 Launchpad with CCS, it doesn't matter if the SOP2 jumper is present or not.
+After flashing, to be able to actually run your application, remove this jumper and reset the MCU.
+Launch Uniflash
+fill com port #
+click "Get Version" to verify if the connection is OK.
+go to “System Files” and click on “/sys/mcuimg.bin”. Under URL, select the wlan_ap binary of the example that was compiled in CCS, eg. myProgram.bin .
+Now the myProgram.bin is stored on the FLASH memory attached to the CC3200 (on the FLASH FS it's called mcuimg.bin).
+Remove SOP2 jumper (for normal operation after reset as in don't go to flashing mode), start minicom on /dev/ttyUSB1 and press the RESET button for normal operation
+
