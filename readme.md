@@ -12,6 +12,8 @@ CC3200 acting as the telemetry intermediate between Ground Control Station (GCS)
 
 In Greek only currently. You can find it in ``Thesis_QuadcopterTelemetry_Nikos_Lazaridis_ppapag.pdf`.
 
+Most of the code has been written in Texas Instruments Code Composer Studio 6. I haven't tested it with updated CCS versions.
+
 
 # Contribute
 
