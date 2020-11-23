@@ -33,4 +33,4 @@ website: *www.keyc0de.net*
 
 # Acknowledgements
 
-Παναγιώτης Παπαγέωργας [καθηγητής](https://eee.uniwa.gr/el/index.php?option=com_content&view=article&id=100:100-papageorgas-panagiotis) - Many thanks!
+Παναγιώτης Παπαγέωργας [καθηγητής](https://eee.uniwa.gr/el/index.php?option=com_content&view=article&id=100:100-papageorgas-panagiotis)
